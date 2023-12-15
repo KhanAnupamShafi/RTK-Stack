@@ -1,5 +1,8 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Loader from '../../components/Loader/Loader';
 import Logo from '../../components/SVG/Logo';
+import { useLoginMutation } from '../../redux/auth/authApi';
 
 interface ErrorState {
   email: string;
@@ -8,13 +11,29 @@ interface ErrorState {
 const SignUp = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [responseError, setResponseError] = useState('');
   const [errors, setErrors] = useState<ErrorState>({
     email: '',
     password: '',
   });
+  const [login, { data, error, isLoading }] = useLoginMutation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (error) {
+      if ('data' in error) {
+        const errMsg =
+          'error' in error ? error.error : JSON.stringify(error.data);
+        setResponseError(JSON.parse(errMsg).error);
+      }
+    }
+    if (data?.token) {
+      navigate('/');
+    }
+  }, [data, error]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setResponseError('');
     // Validate email-password
     if (!email) {
       setErrors((prevErrors) => ({
@@ -43,13 +62,17 @@ const SignUp = () => {
     } else {
       setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
     }
+
+    login({ email: email, password: password });
   };
+
   const handleInputFocus = (field: 'email' | 'password') => {
     setErrors((prevErrors) => ({ ...prevErrors, [field]: '' }));
   };
 
   return (
     <div className="min-h-screen m-auto flex justify-center items-center max-w-[444px] h-[576px]">
+      {isLoading && <Loader />}
       <form
         noValidate
         onSubmit={handleSubmit}
@@ -61,7 +84,7 @@ const SignUp = () => {
           </h1>
         </div>
         <p className="w-80 text-dark text-start text-sm mb-8 font-semibold  tracking-wide cursor-pointer">
-          Sign up to join with Stack
+          Sign in to join with Stack
         </p>
         <div className="space-y-6 mt-14 text-secondary">
           <div className="relative">
@@ -133,8 +156,13 @@ const SignUp = () => {
           <button
             type="submit"
             className="w-full py-2 font-bold text-white bg-primary rounded-lg hover:bg-purple-500 transition-all">
-            Create Account
+            Sign In
           </button>
+          {responseError && (
+            <p className="mt-1 text-xs text-red-600">
+              {responseError}
+            </p>
+          )}
           <p className="mt-7 text-start text-light">
             Already Have An Account?{' '}
             <span className="hover:underline font-semibold text-link cursor-pointer">

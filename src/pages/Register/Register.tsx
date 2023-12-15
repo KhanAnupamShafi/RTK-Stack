@@ -3,9 +3,12 @@ import { FeedbackType } from '@zxcvbn-ts/core/dist/types';
 import * as zxcvbnCommonPackage from '@zxcvbn-ts/language-common';
 import * as zxcvbnEnPackage from '@zxcvbn-ts/language-en';
 import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Loader from '../../components/Loader/Loader';
 import PasswordIndicator from '../../components/PassworIndicator/PasswordIndicator';
 import PasswordSuggestion from '../../components/PassworIndicator/PasswordSuggestion';
 import Logo from '../../components/SVG/Logo';
+import { useRegisterMutation } from '../../redux/auth/authApi';
 
 const options = {
   translations: zxcvbnEnPackage.translations,
@@ -26,6 +29,7 @@ interface ErrorState {
   email: string;
   password: string;
 }
+
 const Register = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -35,6 +39,24 @@ const Register = () => {
     email: '',
     password: '',
   });
+  const [responseError, setResponseError] = useState('');
+  const [register, { data, error, isLoading }] =
+    useRegisterMutation();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (error) {
+      if ('data' in error) {
+        const errMsg =
+          'error' in error ? error.error : JSON.stringify(error.data);
+        setResponseError(JSON.parse(errMsg).error);
+      }
+    }
+    if (data?.id && data?.token) {
+      navigate('/');
+    }
+  }, [data, error]);
+
   useEffect(() => {
     if (password === '') return;
     setIndicator(zxcvbn(password));
@@ -46,6 +68,7 @@ const Register = () => {
   console.log('feedback', score);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setResponseError('');
     // Validate email-password
     if (!email) {
       setErrors((prevErrors) => ({
@@ -74,6 +97,8 @@ const Register = () => {
     } else {
       setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
     }
+
+    register({ email: email, password: password });
   };
   const handleInputFocus = (field: 'email' | 'password') => {
     setErrors((prevErrors) => ({ ...prevErrors, [field]: '' }));
@@ -81,6 +106,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen m-auto flex justify-center items-center max-w-[444px] h-[576px]">
+      {isLoading && <Loader />}
       <form
         noValidate
         onSubmit={handleSubmit}
@@ -173,8 +199,13 @@ const Register = () => {
           <button
             type="submit"
             className="w-full py-2 font-bold text-white bg-primary rounded-lg hover:bg-purple-500 transition-all">
-            Create Account
+            Sign Up
           </button>
+          {responseError && (
+            <p className="mt-1 text-xs text-red-600">
+              {responseError}
+            </p>
+          )}
           <p className="mt-7 text-start text-light">
             Already Have An Account?{' '}
             <span className="hover:underline font-semibold text-link cursor-pointer">

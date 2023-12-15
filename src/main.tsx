@@ -1,10 +1,18 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+import { store } from './app/store.ts';
+import './index.css';
+import { router } from './router/routes.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+    <Provider store={store}>
+      {/* <App /> */}
+      <div className="max-w-screen-2xl mx-auto">
+        <RouterProvider router={router} />
+      </div>
+    </Provider>
+  </React.StrictMode>
+);

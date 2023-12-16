@@ -3,7 +3,7 @@ import { FeedbackType } from '@zxcvbn-ts/core/dist/types';
 import * as zxcvbnCommonPackage from '@zxcvbn-ts/language-common';
 import * as zxcvbnEnPackage from '@zxcvbn-ts/language-en';
 import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import PasswordIndicator from '../../components/PassworIndicator/PasswordIndicator';
 import PasswordSuggestion from '../../components/PassworIndicator/PasswordSuggestion';
@@ -208,10 +208,12 @@ const Register = () => {
           )}
           <p className="mt-7 text-start text-light">
             Already Have An Account?{' '}
-            <span className="hover:underline font-semibold text-link cursor-pointer">
-              {' '}
-              Sign In
-            </span>
+            <Link to={'/login'}>
+              <span className="hover:underline font-semibold text-link cursor-pointer">
+                {' '}
+                Sign In
+              </span>
+            </Link>
           </p>
         </div>
       </form>

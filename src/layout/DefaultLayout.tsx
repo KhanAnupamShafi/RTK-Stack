@@ -1,4 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
+import Footer from '../components/Footer/Footer';
 import NavBar from '../components/NavBar/NavBar';
 
 const DefaultLayout = () => {
@@ -12,7 +13,7 @@ const DefaultLayout = () => {
     <div>
       {isDefault || <NavBar></NavBar>}
       <Outlet></Outlet>
-      {isDefault || <NavBar></NavBar>}
+      {isDefault || <Footer></Footer>}
     </div>
   );
 };

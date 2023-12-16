@@ -1,11 +1,20 @@
+import { RouterProvider } from 'react-router-dom';
 import './App.css';
+import Loader from './components/Loader/Loader';
+import useAuthCheck from './hooks/useAuthCheck';
+import { router } from './router/routes';
 
 function App() {
+  const authStateCheck = useAuthCheck();
   return (
     <>
-      <p className="p-5 text-primary">
-        Click on the Vite and React logos to learn more
-      </p>
+      {!authStateCheck ? (
+        <Loader />
+      ) : (
+        <div className="w-full mx-auto">
+          <RouterProvider router={router} />
+        </div>
+      )}
     </>
   );
 }

@@ -3,6 +3,9 @@ import DefaultLayout from '../layout/DefaultLayout';
 import Home from '../pages/Home/Home';
 import Register from '../pages/Register/Register';
 import SignIn from '../pages/SignIn/SignIn';
+import User from '../pages/User/User';
+import PrivateRoute from './Private/PrivateRoute';
+import PublicRoute from './Public/PublicRoute';
 
 /* --------------- setting up routes for different paths ---------------- */
 export const router = createBrowserRouter([
@@ -12,15 +15,35 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />,
+        element: (
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/users',
+        element: (
+          <PrivateRoute>
+            <User />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/login',
-        element: <SignIn />,
+        element: (
+          <PublicRoute>
+            <SignIn />
+          </PublicRoute>
+        ),
       },
       {
         path: '/signup',
-        element: <Register />,
+        element: (
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        ),
       },
     ],
   },

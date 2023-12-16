@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import Logo from '../../components/SVG/Logo';
 import { useLoginMutation } from '../../redux/auth/authApi';
@@ -165,10 +165,12 @@ const SignUp = () => {
           )}
           <p className="mt-7 text-start text-light">
             Already Have An Account?{' '}
-            <span className="hover:underline font-semibold text-link cursor-pointer">
-              {' '}
-              Sign In
-            </span>
+            <Link to={'/signup'}>
+              <span className="hover:underline font-semibold text-link cursor-pointer">
+                {' '}
+                Sign Up
+              </span>
+            </Link>
           </p>
         </div>
       </form>

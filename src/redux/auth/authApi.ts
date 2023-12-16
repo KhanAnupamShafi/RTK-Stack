@@ -28,6 +28,17 @@ export const authApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const response = await queryFulfilled;
+          // update localStorage
+          localStorage.setItem('auth', JSON.stringify(response.data));
+          // update redux state
+          dispatch(userLoggedIn(response.data));
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
   }),
 });

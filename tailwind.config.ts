@@ -11,6 +11,7 @@ export default {
         error: '#FDA29B',
         light: '#B0B7C3',
         link: '#377DFF',
+        soft: '#F4EBFF',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

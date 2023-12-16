@@ -29,6 +29,8 @@ export const authApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      // do something alongside api call but before request is sent
+
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           console.log(arg);

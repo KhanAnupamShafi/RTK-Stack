@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import DefaultLayout from '../layout/DefaultLayout';
 import Home from '../pages/Home/Home';
+import NotFound from '../pages/NotFound/NotFound';
 import Register from '../pages/Register/Register';
 import SignIn from '../pages/SignIn/SignIn';
 import User from '../pages/User/User';
@@ -44,6 +45,11 @@ export const router = createBrowserRouter([
             <Register />
           </PublicRoute>
         ),
+      },
+      // Not-found route
+      {
+        path: '*',
+        element: <NotFound />,
       },
     ],
   },

@@ -105,12 +105,12 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen m-auto flex justify-center items-center max-w-[444px] h-[576px]">
+    <div className="min-h-screen m-auto flex justify-center items-center md:max-w-[444px] h-[576px] max-w-[333px]">
       {isLoading && <Loader />}
       <form
         noValidate
         onSubmit={handleSubmit}
-        className="py-12 px-16 bg-white rounded-xl shadow-lg z-20">
+        className="py-12 px-16 md:px-16 bg-white rounded-xl shadow-lg z-20">
         <div className="flex justify-start items-center mb-5 cursor-pointer gap-4">
           <Logo />
           <h1 className="text-3xl font-bold text-center text-secondary">

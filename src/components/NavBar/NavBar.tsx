@@ -7,6 +7,7 @@ import SettingsImg from '../../assets/settings.svg';
 import { userLoggedOut } from '../../redux/auth/authSlice';
 import BrandLogo from '../SVG/BrandLogo';
 import Door from '../SVG/Door';
+import MobileNav from './MobileNav';
 const NavBar = () => {
   const styles = {
     className:
@@ -28,14 +29,17 @@ const NavBar = () => {
     localStorage.clear();
   };
   return (
-    <nav className="bg-primary w-full  !z-40">
-      <div className="max-w-screen-2xl h-[72px] flex gap-5 items-center mx-auto ">
+    <nav className="bg-primary w-full !z-40">
+      <div className="max-w-screen-md px-2  md:max-w-screen-2xl h-[72px] flex gap-5 items-center mx-auto ">
         <div className="flex items-center gap-5">
           <BrandLogo />
           <h1 className="text-white text-xl font-extrabold">Stack</h1>
         </div>
-        <div className="ml-12 flex flex-1 justify-between">
-          <ul className="text-soft flex gap-1 text-base">
+        <div className="ml-0 md:ml-12 flex flex-1 justify-end md:justify-between">
+          <div className="md:hidden block">
+            <MobileNav />
+          </div>
+          <ul className="text-soft hidden md:flex  gap-1 text-base">
             {navItems.map((link) => (
               <NavLink
                 key={link.name}
@@ -57,7 +61,7 @@ const NavBar = () => {
               </NavLink>
             ))}
           </ul>
-          <div className="group flex gap-2 items-center">
+          <div className="flex gap-2 items-center">
             <div className="flex gap-0 cursor-pointer">
               <img className="p-2.5" src={SearchImg} alt="" />
               <div className='dropdown inline-block relative"'>
@@ -91,21 +95,6 @@ const NavBar = () => {
             <img className="dropdown" src={Avatar} alt="User Image" />
           </div>
         </div>
-        {/* <div className="">
-          <div className="p-10">
-            <div className="dropdown inline-block relative">
-              <button className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
-                <span className="mr-1">Dropdown</span>
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20">
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{' '}
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div> */}
       </div>
     </nav>
   );

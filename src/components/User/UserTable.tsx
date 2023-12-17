@@ -44,13 +44,13 @@ const UserTable = () => {
   //   return <p>Error: {error.message}</p>;
   // }
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5">
-      <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
+    <div className="rounded-lg border border-gray-200 shadow-md my-5  overflow-x-scroll md:overflow-x-hidden">
+      <table className="md:w-full table-auto border-collapse bg-white text-left text-sm text-gray-500">
         <thead className="bg-gray-50 text-[#667085]">
           <tr>
             <th
               scope="col"
-              className="px-6 py-3 text-xs font-medium ">
+              className="px-[22px] py-3 text-xs font-medium ">
               <div className="flex items-center gap-3">
                 <div className="h-3 w-3 bg-white border-2 border-purple-400 flex items-center p-0.5">
                   <img src="./images/minus.svg" alt="" />
@@ -99,7 +99,7 @@ const UserTable = () => {
           <tbody className="divide-y divide-gray-100 border-t border-gray-100 ">
             {sortedUsers.map((user: UserI) => (
               <tr key={user?.id} className="hover:bg-gray-50">
-                <th className="flex items-center gap-3 px-6 py-4 font-normal ">
+                <th className="flex-col md:flex-row flex items-start md:items-center gap-3 px-6 py-4 font-normal ">
                   <div className="py-2 ">
                     <input
                       type="checkbox"
@@ -107,7 +107,7 @@ const UserTable = () => {
                       value="id-1"
                     />
                   </div>
-                  <div className="relative h-10 w-10">
+                  <div className="relative h-10 w-10 ">
                     <img
                       className="h-full w-full rounded-full object-cover object-center"
                       src={user?.avatar}
@@ -138,10 +138,10 @@ const UserTable = () => {
                 </td>
                 <td className="px-6 py-4 w-[80px]">
                   <div className="flex justify-end gap-6">
-                    <button>
+                    <button className="w-5 h-5">
                       <img src="./images/trash-2.svg" alt="" />
                     </button>
-                    <button>
+                    <button className="w-5 h-5">
                       <img src="./images/edit-2.svg" alt="" />
                     </button>
                   </div>
